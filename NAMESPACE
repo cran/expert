@@ -1,0 +1,22 @@
+### Exports
+export(expert, ogive, cdf)
+
+### Imports
+import(stats, graphics)
+
+### Methods
+S3method(hist, expert)
+
+S3method(knots, cdf)
+S3method(knots, ogive)
+
+S3method(mean, expert)
+
+S3method(plot, cdf)
+S3method(plot, ogive)
+
+S3method(print, cdf)
+S3method(print, expert)
+S3method(print, ogive)
+
+S3method(quantile, expert)

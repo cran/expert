@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: expert 0.1-0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2008-07-09 17:42\n"
+"PO-Revision-Date: 2008-07-09 17:44-0400\n"
+"Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
+"Language-Team: Mathieu Pigeon <mathieu.pigeon.3@ulaval.ca>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "'x' must be an object of class \"expert\""
+msgstr "'x' doit être un objet de classe \"expert\""
+
+msgid "'probs' must be between 0 and 1"
+msgstr "'probs' doit être un nombre entre 0 et 1"
+
+msgid "'qseed' must be sorted increasingly."
+msgstr "'qseed' doit être trié en ordre croissant"
+
+msgid "true value of seed variable"
+msgstr "vraie valeur de la variable de calibration"
+
+msgid "out of range"
+msgstr "hors échelle"
+
+msgid "infinite group boundaries"
+msgstr "bornes de groupe infinies"
+
+msgid "'probability' is an alias for '!freq', however they differ."
+msgstr "'probability' est un alias pour '!freq', cependant ils diffèrent."
+
+msgid "weights must sum to 1"
+msgstr "les poids doivent sommer à 1"
