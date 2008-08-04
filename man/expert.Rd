@@ -1,18 +1,27 @@
 \name{expert}
 \alias{expert}
+\alias{print.expert}
+\alias{summary.expert}
+\alias{print.summary.expert}
 \title{Modeling of Data Using Expert Opinion}
 \description{
   Compute an aggregate distribution from expert opinion using either of
-  the Cooke, Mendel-Sheridan and predefined weights models.
+  the Cooke, Mendel-Sheridan or predefined weights models.
 }
 \usage{
 expert(x, method = c("cooke", "ms", "weights"), probs, true.seed,
        alpha = NULL, w = NULL)
+
+\method{print}{expert}(x, \dots)
+
+\method{summary}{expert}(object, \dots)
+
+\method{print}{summary.expert}(x, \dots)
 }
 \arguments{
   \item{x}{a list giving experts' quantiles for the seed variables and
     the decision variable. See details below for the exact structure of
-    the object.}
+    the object. For the methods: an object of class \code{"expert"}.}
   \item{method}{method to be used to aggregate distributions.}
   \item{probs}{vector of probabilities corresponding to the quantiles
     given by the experts.}
@@ -23,6 +32,10 @@ expert(x, method = c("cooke", "ms", "weights"), probs, true.seed,
     seed variables.}
   \item{w}{vector of weights in predefined weights model. If \code{NULL}
     or missing, equal weights are given to each expert.}
+  \item{object}{an object of class \code{"expert"}}
+  \item{\dots}{further arguments to \code{\link[base]{format}} for the
+    \code{print} and \code{print.summary} methods; unused for the
+    \code{summary} method.}
 }
 \details{
   Expert opinion is given by means of quantiles for \eqn{k} seed
@@ -46,11 +59,27 @@ expert(x, method = c("cooke", "ms", "weights"), probs, true.seed,
   and one for the decision variable (in this order).
 }
 \value{
-  A function of class \code{"expert"}.
+  Function \code{expert} computes the aggregate distribution using the
+  model specified in \code{model}. The value returned is an object of
+  class \code{"expert"}.
+
+  An object of class \code{"expert"} is a list containing at least the
+  following components:
+  \item{breaks}{vector of knots of the aggregate distribution.}
+  \item{probs}{vector of probabilities of the aggregate distribution.}
+  \item{nexp}{number of experts in the model.}
+  \item{nseed}{number of seed variables in the model.}
+  \item{quantiles}{vector of probabilities corresponding to the quantiles
+    given by the experts.}
+
+  In addition, for \code{method = "cooke"}, a component \code{alpha}
+  containing the confidence level: either the value given in argument
+  to the function or the optimized value.
 
   There are methods available to represent (\code{print}), plot
-  (\code{plot}), compute quantiles (\code{quantile}) and compute the
-  mean (\code{mean}) of \code{"expert"} objects.
+  (\code{plot}), compute quantiles (\code{quantile}), summarize
+  (\code{summary}) and compute the mean (\code{mean}) of \code{"expert"}
+  objects.
 }
 \references{
   Cooke, R. (1991), \emph{Expert in Uncertainty}, Oxford University Press.
@@ -82,7 +111,9 @@ expert(x, "cooke", probs, true.seed, alpha = 0.03) # fixed alpha
 expert(x, "cooke", probs, true.seed)               # optimized alpha
 
 ## Mendel-Sheridan model
-expert(x, "ms", probs, true.seed)
+fit <- expert(x, "ms", probs, true.seed)
+fit				# print method
+summary(fit)                    # more information
 
 ## Predefined weights model
 expert(x, "weights", probs, true.seed)             # equal weights

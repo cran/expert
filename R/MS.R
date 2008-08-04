@@ -62,5 +62,6 @@ MS <- function(nprobs, nexp, nseed, true.seed, qseed, qk)
     ## Final results
     breaks <- c(lower.bounds[is.possible],
                 tail(upper.bounds[is.possible], 1))
-    list(breaks = breaks, probs = pred)
+    structure(list(breaks = breaks, probs = pred),
+              method = "Mendel-Sheridan")
 }

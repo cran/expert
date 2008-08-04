@@ -41,7 +41,10 @@ cooke <- function(nprobs, nexp, nseed, true.seed, qseed, qk, alpha)
 
     ## Compute aggregate distribution
     breaks <- drop(matrix(qseed[, nseed + 1, 1:nexp], ncol = nexp) %*% w)
-    list(breaks = breaks, probs = qk)
+
+    ## Results
+    structure(list(breaks = breaks, probs = qk, alpha = alpha),
+              method = "Cooke")
 }
 
 cooke.weights <- function(alpha, nprobs, nexp, nseed, true.seed, qseed, qk)

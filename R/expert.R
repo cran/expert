@@ -9,12 +9,12 @@
 expert <- function(x, method = c("cooke", "ms", "weights"), probs,
                    true.seed, alpha = NULL, w = NULL)
 {
-    nexp<- length(x)                    # nb experts
+    nexp <- length(x)                   # nb experts
     nseed <- length(x[[1]]) - 1         # nb seed variables
     nprobs <- length(probs)             # nb quantiles
 
     if (any(probs < 0) || any(probs > 1))
-        stop("'probs' must be between 0 and 1")
+        stop("values in 'probs' must be between 0 and 1")
 
     ## Extract data from the list and build an array containing
     ## data for seed variables (s.v.) and unknown variable (u.v.).
@@ -56,12 +56,16 @@ expert <- function(x, method = c("cooke", "ms", "weights"), probs,
 
     res <- switch(method,
                   cooke = cooke(nprobs, nexp, nseed, true.seed, qseed,
-                  qk = diff(probs), alpha = alpha),
+                                qk = diff(probs), alpha = alpha),
                   ms = MS(nprobs, nexp, nseed, true.seed, qseed,
-                  qk = diff(probs)),
+                          qk = diff(probs)),
                   weights = weights(nprobs, nexp, nseed, true.seed, qseed,
-                  qk = diff(probs), w = w))
-    res$call <- match.call()
+                                    qk = diff(probs), w = w))
+
+    res$nexp <- nexp
+    res$nseed <- nseed
+    res$quantiles <- probs
     class(res) <- "expert"
+    attr(res, "call") <- match.call()
     res
 }

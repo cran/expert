@@ -18,5 +18,8 @@ S3method(plot, ogive)
 S3method(print, cdf)
 S3method(print, expert)
 S3method(print, ogive)
+S3method(print, summary.expert)
 
 S3method(quantile, expert)
+
+S3method(summary, expert)

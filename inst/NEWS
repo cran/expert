@@ -1,0 +1,17 @@
+===== expert: Modeling of Data Using Expert Opinion =====
+
+Version 0.1-2
+=============
+
+NEW FEATURES
+
+  o Better display of results and new summary() method for objects of
+    class "expert".
+
+
+Version 0.1-1
+=============
+
+  o Initial public release.
+  o Contains functions expert(), cdf() and ogive(), and methods for
+    hist(), mean() and quantile().
