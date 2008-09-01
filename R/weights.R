@@ -14,7 +14,7 @@ weights <- function(nprobs, nexp, nseed, true.seed, qseed, qk, w)
     if (!isTRUE(all.equal(sum(w), 1)))
         stop("weights must sum to 1")
 
-    ## Compute aggregate distribution
+    ## Compute aggregated distribution
     breaks <- drop(matrix(qseed[, nseed + 1, 1:nexp], ncol = nexp) %*% w)
 
     ## Results

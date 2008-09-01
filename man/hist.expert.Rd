@@ -1,6 +1,6 @@
 \name{hist.expert}
 \alias{hist.expert}
-\title{Histogram of the Aggregate Expert Distribution}
+\title{Histogram of the Expert Aggregated Distribution}
 \description{
   This method for the generic function \code{\link{hist}} is mainly
   useful to plot the histogram of objects of class \code{"expert"}. If

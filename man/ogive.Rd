@@ -3,7 +3,7 @@
 \alias{print.ogive}
 \alias{knots.ogive}
 \alias{plot.ogive}
-\title{Ogive of the Aggregate Expert Distribution}
+\title{Ogive of the Expert Aggregated Distribution}
 \description{
   Compute a smoothed empirical distribution function for objects of
   class \code{"expert"}.
@@ -15,7 +15,7 @@ ogive(x, \dots)
 
 \method{knots}{ogive}(Fn, \dots)
 
-\method{plot}{ogive}(x, main = NULL, xlab = "x", ylab = "F(x)", \dots)
+\method{plot}{ogive}(x, main = NULL, xlab = "x", ylab = "G(x)", \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"expert"}; for the methods, an
@@ -32,13 +32,13 @@ ogive(x, \dots)
   distribution function.
 
   The equation of the ogive is
-  \deqn{F_n(x) = \frac{(c_j - x) F_n(c_{j-1}) +
-      (x - c_{j-1}) F_n(c_j)}{c_j - c_{j - 1}}}{%
-    Fn(x) = ((c[j] - x) Fn(c[j-1]) +
-    (x - c[j-1]) Fn(c[j]))/(c[j] - c[j-1])}
+  \deqn{G(x) = \frac{(c_j - x) F(c_{j - 1}) +
+      (x - c_{j - 1}) F(c_j)}{c_j - c_{j - 1}}}{%
+    G(x) = ((c[j] - x) F(c[j-1]) +
+    (x - c[j-1]) F(c[j]))/(c[j] - c[j-1])}
   for \eqn{c_{j-1} < x \leq c_j}{c[j-1] < x <= c[j]} and where
   \eqn{c_0, \dots, c_r}{c[0], \dots, c[r]} are the \eqn{r + 1} group
-  boundaries.
+  boundaries and \eqn{F} is the cumulative distribution function.
 }
 \value{
   For \code{ogive}, a function of class \code{"ogive"}, inheriting from the

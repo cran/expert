@@ -1,6 +1,6 @@
 ### ===== expert =====
 ###
-### Histogram of the aggregate expert distribution
+### Histogram of the aggregated expert distribution
 ###
 ### AUTHORS: Vincent Goulet <vincent.goulet@act.ulaval.ca>,
 ###          Mathieu Pigeon <mathieu.pigeon.3@ulaval.ca>

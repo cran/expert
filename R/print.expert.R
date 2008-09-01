@@ -23,7 +23,7 @@ print.expert <- function(x, ...)
                      ", ", numform(breaks[-1], w), "]", sep = "")
     res <- data.frame(Interval = fbreaks, Probability = probs)
 
-    cat("\nAggregate Distribution Using", attr(x, "method"), "Model\n\n")
+    cat("\nAggregated Distribution Using", attr(x, "method"), "Model\n\n")
     print(res, row.names = FALSE, ...)
     if (!is.null(alpha))
         cat("\n Alpha:", format(alpha, ...), "\n")

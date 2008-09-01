@@ -10,36 +10,40 @@ cooke <- function(nprobs, nexp, nseed, true.seed, qseed, qk, alpha)
     ## Compute first set of weights and calibration coefficients.
     cw <- cooke.weights(if (is.null(alpha)) 0 else alpha,
                         nprobs, nexp, nseed, true.seed,
-                        qseed[, - (nseed + 1), , drop = FALSE], qk)
-
+                        qseed[, -(nseed + 1), , drop = FALSE], qk)
     w <- cw$weights
 
     ## If 'alpha' is NULL, the function determines confidence level
     ## that maximizes the weight given by the model to a virtual
-    ## expert who would give aggregate distribution for seed variables.
+    ## expert who would give aggregated distribution for seed
+    ## variables.
     if (is.null(alpha))
     {
-        ## Determination of optimized alpha: function computes weight
-        ## given to the virtual expert for 'alpha' = 0.001, 0.002, ...,
-        ## 1.000 and retains maximal value.
-        qseedmod <- array(c(qseed,
-                          apply(qseed, 2, "%*%", cw$weights)),
-                        dim = c(nprobs, nseed + 1, nexp + 1))
+        ## No true optimization, here, since the function is not
+        ## smooth enough. Instead, we try each value for alpha from a
+        ## smart set: values just under the calibration components of
+        ## each expert as obtained above.
+        alpha <- c(cw$calibration - .Machine$double.eps, 1)
 
-        alpha <- cw$calibration - .Machine$double.eps
-        qseedmod <- qseedmod[, -(nseed + 1), , drop = FALSE]
+        ## Add virtual expert
+        qseed1 <- qseed[, -(nseed + 1), , drop = FALSE]
+        qseed1 <- array(c(qseed1, apply(qseed1, 2, "%*%", w)),
+                        dim = c(nprobs, nseed, nexp + 1))
+
+        ## Compute set of weights for each alpha
         w <- sapply(alpha, FUN <- function(x) cooke.weights(x, nprobs,
                                                             nexp + 1,
                                                             nseed, true.seed,
-                                                            qseedmod,
+                                                            qseed1,
                                                             qk)$weights)
 
-        wmax <- which.max(w[nexp + 1,]) # find the maximum weight
-        alpha <- alpha[wmax]            # find the optimized alpha
-        w <- w[-(nexp + 1), wmax]/sum(w[-(nexp + 1), wmax])
+        wmax <- which.max(w[nexp + 1,]) # max weight for virtual expert
+        alpha <- alpha[wmax]            # optimized alpha
+        w <- w[-(nexp + 1), wmax]       # optimal set of weights
+        w <- w / sum(w)                 # normalization
     }
 
-    ## Compute aggregate distribution
+    ## Compute aggregated distribution
     breaks <- drop(matrix(qseed[, nseed + 1, 1:nexp], ncol = nexp) %*% w)
 
     ## Results
@@ -56,9 +60,10 @@ cooke.weights <- function(alpha, nprobs, nexp, nseed, true.seed, qseed, qk)
     fun <- function(i)
         apply(matrix(qseed[, i, ], ncol = nexp), 2,
               function(v) cut(true.seed[i], v, labels = FALSE) == s)
+
     ## Compute the empirical distribution for each interquantile space
     ## and each expert.
-    S <- array(rowSums(sapply(1:nseed, fun))/nseed, c(nprobs - 1, nexp))
+    S <- array(rowSums(sapply(seq_len(nseed), fun))/nseed, c(nprobs - 1, nexp))
 
     ## Calibration
     calibration <- pchisq(2 * nseed * colSums(S * pmax(log(S/qk), 0)),

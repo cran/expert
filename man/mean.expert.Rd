@@ -1,6 +1,6 @@
 \name{mean.expert}
 \alias{mean.expert}
-\title{Arithmetic Mean of the Aggregate Expert Distribution}
+\title{Arithmetic Mean of the Expert Aggregated Distribution}
 \description{
   Mean of objects of class \code{"expert"}.
 }

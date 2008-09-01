@@ -8,20 +8,21 @@
 quantile.expert <- function(x, probs = seq(0, 1, 0.25),
                             smooth = FALSE, names = TRUE, ...)
 {
-    ## An empirical and discrete approach is used for
-    ## 'expert' objects.
-    y <- cumsum(x$probs)
+    y <- c(0, cumsum(x$probs))
     x <- x$breaks
     ind <- sapply(probs, function(q) match(TRUE, y >= q))
 
-    res <-
-        if (smooth)
-        {
-            h <- (y[ind] - probs) / (y[ind] - y[ind - 1])
-            (1 - h) * x[ind - 1] + h * x[ind]
-        }
-        else
-            x[ind]
+    ## Create the inverse function of either the cdf or the ogive.
+    fun <-
+        if (smooth)                     # ogive
+            approxfun(y, x, yleft = min(x), yright = max(x),
+                      method = "linear", ties = "ordered")
+        else                            # cdf
+            approxfun(y, x, yleft = min(x), yright = max(x),
+                      method = "constant", ties = "ordered")
+
+    ## Quantiles
+    res <- fun(probs)
 
     if (names)
     {

@@ -1,5 +1,26 @@
 ===== expert: Modeling of Data Using Expert Opinion =====
 
+Version 1.0-0
+=============
+
+USER VISIBLE CHANGES
+
+  o summary.expert() now flags automatically set quantiles.
+
+  o Output of cdf() now inherits from class "stepfun". Its plot is now
+    more similar to plot of objects obtained with stats:::ecdf().
+
+  o New default y axis titles in plot.cdf() and plot.ogive().
+
+BUG FIXES
+
+  o Domain of functions returned by cdf() and ogive() now restricted
+    to [0, 1].
+
+  o Quantiles are now computed correctly in 0 and 1 and more
+    efficiently throughout.
+
+
 Version 0.1-2
 =============
 

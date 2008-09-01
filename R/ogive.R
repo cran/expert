@@ -1,6 +1,6 @@
 ### ===== experts =====
 ###
-### Ogive of the aggregate expert distribution
+### Ogive of the aggregated expert distribution
 ###
 ### AUTHORS: Vincent Goulet <vincent.goulet@act.ulaval.ca>,
 ### Mathieu Pigeon <mathieu.pigeon.3@ulaval.ca>
@@ -16,7 +16,7 @@ ogive <- function(x, ...)
     x <- x$breaks
 
     ## Create an object of class 'ogive'.
-    res <- approxfun(x, c(0, cumsum(y)), yleft = 0, yright = 1,
+    res <- approxfun(x, c(0, pmin(cumsum(y), 1)), yleft = 0, yright = 1,
                      method = "linear", ties = "ordered")
     class(res) <- c("ogive", class(res))
     attr(res, "call") <- sys.call()
@@ -30,7 +30,7 @@ print.ogive <- function(x, digits = getOption("digits") - 2, ...)
     numform <- function(x) paste(formatC(x, dig = digits), collapse = ", ")
 
     ## The rest is adapted from ecdf()
-    cat("Aggregate Expert Ogive\nCall: ")
+    cat("Expert Aggregated Ogive\nCall: ")
     print(attr(x, "call"), ...)
     nc <- length(xxc <- get("x", env = environment(x)))
     nn <- length(xxn <- get("y", env = environment(x)))
@@ -48,7 +48,7 @@ print.ogive <- function(x, digits = getOption("digits") - 2, ...)
 ### Identical to stats::knots.stepfun().
 knots.ogive <- stats:::knots.stepfun
 
-plot.ogive <- function(x, main = NULL, xlab = "x", ylab = "F(x)", ...)
+plot.ogive <- function(x, main = NULL, xlab = "x", ylab = "G(x)", ...)
 {
     if (missing(main))
         main <- {

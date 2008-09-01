@@ -17,9 +17,9 @@ cdf <- function(x, ...)
     x <- x$breaks
 
     ## Create an object of class 'cdf'.
-    res <- approxfun(x, c(0, cumsum(y)), yleft = 0, yright = 1,
+    res <- approxfun(x, c(0, pmin(cumsum(y), 1)), yleft = 0, yright = 1,
                      method = "constant", ties = "ordered")
-    class(res) <- c("cdf", class(res))
+    class(res) <- c("cdf", "stepfun", class(res))
     attr(res, "call") <- sys.call()
     res
 }
@@ -49,17 +49,10 @@ print.cdf <- function(x, digits = getOption("digits") - 2, ...)
 ### Identical to stats::knots.stepfun().
 knots.cdf <- stats:::knots.stepfun
 
-plot.cdf <- function(x, main = NULL, xlab = "x",
-                     ylab = expression(F[n](x)), ...)
+### Essentially identical to stats::print.ecdf().
+plot.cdf <- function(x, ..., ylab = "F(x)", verticals = FALSE,
+                     col.01line = "gray70")
 {
-    if (missing(main))
-        main <- {
-            cl <- attr(x, "call")
-            deparse(if (!is.null(cl)) cl else sys.call())
-        }
-
-    kn <- knots(x)
-    Fn <- x(kn)
-    plot(kn, Fn,  ..., type = "s", pch = 16,
-         main = main, xlab = xlab, ylab = ylab)
+    plot.stepfun(x, ..., ylab = ylab, verticals = verticals)
+    abline(h = c(0,1), col = col.01line, lty = 2)
 }

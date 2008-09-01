@@ -5,7 +5,7 @@
 \alias{print.summary.expert}
 \title{Modeling of Data Using Expert Opinion}
 \description{
-  Compute an aggregate distribution from expert opinion using either of
+  Compute an aggregated distribution from expert opinion using either of
   the Cooke, Mendel-Sheridan or predefined weights models.
 }
 \usage{
@@ -28,7 +28,7 @@ expert(x, method = c("cooke", "ms", "weights"), probs, true.seed,
   \item{true.seed}{vector of true values for the seed variables.}
   \item{alpha}{confidence level in Cooke model. If \code{NULL} or
     missing, the function determines the confidence level that
-    maximizes the weight given to the aggregate distribution for the
+    maximizes the weight given to the aggregated distribution for the
     seed variables.}
   \item{w}{vector of weights in predefined weights model. If \code{NULL}
     or missing, equal weights are given to each expert.}
@@ -41,11 +41,11 @@ expert(x, method = c("cooke", "ms", "weights"), probs, true.seed,
   Expert opinion is given by means of quantiles for \eqn{k} seed
   variables and one decision variable. Results for seed variables are
   compared to the true values and used to determine the influence of
-  each expert on the aggregate distribution. The three methods supported
+  each expert on the aggregated distribution. The three methods supported
   are different ways to aggregate the information provided by the
   experts in one final distribution.
 
-  The aggregate distribution in the \code{"cooke"} method is a convex
+  The aggregated distribution in the \code{"cooke"} method is a convex
   combination of the quantiles, with weights obtained from the
   calibration phase. The \code{"weights"} method is similar, but weights
   are provided in argument to the function.
@@ -57,16 +57,22 @@ expert(x, method = c("cooke", "ms", "weights"), probs, true.seed,
   Object \code{x} is a list of lists, one for each expert. The latter
   contains \eqn{k + 1} vectors of quantiles, one for each seed variable
   and one for the decision variable (in this order).
+
+  If \code{x} does not contain the 0th and/or the 100th quantile, they
+  are determined by removing and adding 10\% of the smallest interval
+  containing all quantiles given by the experts to the bounds of this
+  interval. Note also that only the Mendel-Sheridan model allows
+  non-finite lower and upper bounds.
 }
 \value{
-  Function \code{expert} computes the aggregate distribution using the
+  Function \code{expert} computes the aggregated distribution using the
   model specified in \code{model}. The value returned is an object of
   class \code{"expert"}.
 
   An object of class \code{"expert"} is a list containing at least the
   following components:
-  \item{breaks}{vector of knots of the aggregate distribution.}
-  \item{probs}{vector of probabilities of the aggregate distribution.}
+  \item{breaks}{vector of knots of the aggregated distribution.}
+  \item{probs}{vector of probabilities of the aggregated distribution.}
   \item{nexp}{number of experts in the model.}
   \item{nseed}{number of seed variables in the model.}
   \item{quantiles}{vector of probabilities corresponding to the quantiles

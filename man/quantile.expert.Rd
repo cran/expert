@@ -1,6 +1,6 @@
 \name{quantile.expert}
 \alias{quantile.expert}
-\title{Quantiles of the Aggregate Expert Distribution}
+\title{Quantiles of the Expert Aggregated Distribution}
 \description{
   Quantile for objects of class \code{"expert"}.
 }

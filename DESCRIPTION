@@ -1,8 +1,8 @@
 Package: expert
 Type: Package
-Title: Modeling of data using expert opinion
-Version: 0.1-2
-Date: 2008-08-04
+Title: Modeling without data using expert opinion
+Version: 1.0-0
+Date: 2008-09-01
 Author: Mathieu Pigeon, Michel Jacques, Vincent Goulet
 Maintainer: Mathieu Pigeon <mathieu.pigeon.3@ulaval.ca>
 Description: Expert opinion (or judgment) is a body of techniques to
@@ -17,4 +17,4 @@ Encoding: latin1
 LazyLoad: yes
 LazyData: yes
 ZipData: yes
-Packaged: Sun Aug 10 10:19:14 2008; MaTT
+Packaged: Thu Oct  2 08:11:47 2008; vincent

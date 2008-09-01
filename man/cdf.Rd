@@ -3,7 +3,7 @@
 \alias{print.cdf}
 \alias{knots.cdf}
 \alias{plot.cdf}
-\title{Aggregate Expert Cumulative Distribution Function}
+\title{Expert Aggregated Cumulative Distribution Function}
 \description{
   Compute or plot the cumulative distribution function for objects of
   class \code{"expert"}.
@@ -15,7 +15,8 @@ cdf(x, \dots)
 
 \method{knots}{cdf}(Fn, \dots)
 
-\method{plot}{cdf}(x, main = NULL, xlab = "x", ylab = expression(F[n](x)), \dots)
+\method{plot}{cdf}(x, \dots, ylab = "F(x)", verticals = FALSE,
+     col.01line = "gray70")
 }
 \arguments{
   \item{x}{an object of class \code{"expert"}; for the methods, an
@@ -23,13 +24,20 @@ cdf(x, \dots)
   \item{digits}{number of significant digits to use, see
     \code{\link{print}}.}
   \item{Fn}{an \R object inheriting from \code{"cdf"}.}
-  \item{main}{main title.}
-  \item{xlab, ylab}{labels of x and y axis.}
-  \item{\dots}{arguments to be passed to subsequent methods.}
+  \item{\dots}{arguments to be passed to subsequent methods, e.g.
+    \code{\link{plot.stepfun}} for the \code{plot} method.}
+  \item{ylab}{label for the y axis.}
+  \item{verticals}{see \code{\link{plot.stepfun}}.}
+  \item{col.01line}{numeric or character specifying the color of the
+    horizontal lines at y = 0 and 1, see \code{\link{colors}}.}
 }
 \details{
-  The function builds the aggregate expert cumulative distribution
+  The function builds the expert aggregated cumulative distribution
   function corresponding to the results of \code{\link{expert}}.
+
+  The function \code{plot.cdf} which implements the \code{\link{plot}}
+  method for \code{cdf} objects, is implemented via a call to
+  \code{\link{plot.stepfun}}; see its documentation.
 }
 \value{
   For \code{cdf}, a function of class \code{"cdf"}, inheriting from the
@@ -38,7 +46,8 @@ cdf(x, \dots)
 \seealso{
   \code{\link{expert}} to create objects of class \code{"expert"};
   \code{\link{ogive}} for the linear interpolation;
-  \code{\link{ecdf}} for related documentation.
+  \code{\link{ecdf}} and \code{\link{stepfun}} for related
+  documentation.
 }
 \examples{
 x <- list(E1 <- list(A1 <- c(0.14, 0.22, 0.28),
